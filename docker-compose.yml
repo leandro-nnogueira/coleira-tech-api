@@ -12,12 +12,16 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123@postgres
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - coleira_pgdata:/var/lib/postgresql/data
     networks:
       - coleira-network
 
   api:
-    build: .  # Vai usar o Dockerfile que está na raiz do projeto
+<<<<<<< HEAD
+    build: .
+=======
+    build: .  # Usa o Dockerfile da raiz
+>>>>>>> 4716bec24a74ca121ca098416dd59df1b79f3f5e
     container_name: coleira-tech-api
     depends_on:
       - postgres
@@ -31,7 +35,14 @@ services:
       - coleira-network
 
 volumes:
+<<<<<<< HEAD
   pgdata:
+    driver: local
+    driver_opts:
+      railway: "true"  # sinaliza ao Railway que esse volume é persistente
+=======
+  coleira_pgdata:  # nome explícito evita problemas de volume anônimo
+>>>>>>> 4716bec24a74ca121ca098416dd59df1b79f3f5e
 
 networks:
   coleira-network:
