@@ -1,40 +1,15 @@
-version: '3.8'
-
 services:
-  postgres:
-    image: postgres:latest
-    container_name: postgres_container
-    restart: always
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_DB: coleira-tech
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123@postgres
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    networks:
-      - coleira-network
-
   api:
     build: .
     container_name: coleira-tech-api
-    depends_on:
-      - postgres
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/coleira-tech
+      SPRING_DATASOURCE_URL: jdbc:postgresql://ballast.proxy.rlwy.net:39410/railway
       SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: 123@postgres
+      SPRING_DATASOURCE_PASSWORD: OcgOZwJoTqPkXAHtaZcKioBnuIYvKFxg
     networks:
       - coleira-network
-
-volumes:
-  pgdata:
-    driver: local
-    driver_opts:
-      railway: "true"  # sinaliza ao Railway que esse volume é persistente
 
 networks:
   coleira-network:
