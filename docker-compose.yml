@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   postgres:
     image: postgres:latest
@@ -11,6 +13,26 @@ services:
       POSTGRES_PASSWORD: 123@postgres
     volumes:
       - pgdata:/var/lib/postgresql/data
+    networks:
+      - coleira-network
+
+  api:
+    build: .  # Vai usar o Dockerfile que está na raiz do projeto
+    container_name: coleira-tech-api
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/coleira-tech
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 123@postgres
+    networks:
+      - coleira-network
 
 volumes:
   pgdata:
+
+networks:
+  coleira-network:
+    driver: bridge
