@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/ColeiraTech.png" alt="ColeiraTech Logo" width="600"/>
+</p>
+
 # 🐾 Coleira Tech – API de Monitoramento para Pets
 
 O **Coleira Tech** é um sistema de rastreamento em tempo real para animais de estimação, desenvolvido como parte de um projeto acadêmico. Seu principal objetivo é reduzir o número de animais perdidos, fornecendo uma solução acessível, confiável e prática para tutores e organizações de proteção animal.
