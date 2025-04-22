@@ -1,3 +1,4 @@
+
 <p align="center">
   <img src="assets/ColeiraTech.png" alt="ColeiraTech Logo" width="600"/>
 </p>
@@ -8,75 +9,94 @@ O **Coleira Tech** é um sistema de rastreamento em tempo real para animais de e
 
 ---
 
-## 📦 Tecnologias Utilizadas
+## 🚀 Tecnologias Utilizadas
 
 - **Java 21**
 - **Spring Boot**
 - **PostgreSQL**
-- **Docker & Docker Compose**
-- **Módulo A9G (GPS + GPRS)** – para coleta e envio dos dados de localização
-- **HTTP POST** – para envio dos dados para a API
+- **Docker e Docker Compose**
+- **Módulo A9G (GPS + GPRS)**
+- **HTTP (comunicação via POST)**
+- **API RESTful**
 
 ---
 
 ## ⚙️ Funcionalidades
 
-- 📍 **Receber localização do pet via requisição POST**
-- 🗃️ **Armazenar dados em banco de dados PostgreSQL**
-- 🕐 **Registrar data e hora da localização**
-- 🔍 **Buscar a última posição de um pet**
-- 📊 **Consultar histórico de localizações por animal e por data**
+- Receber dados de localização (latitude, longitude, data/hora, identificador do animal).
+- Salvar os dados em um banco PostgreSQL.
+- Consultar:
+  - Última localização do pet.
+  - Histórico completo de localizações, com filtro por data.
+- Relacionar pets com seus donos e suas coleiras.
 
 ---
 
-## 🚀 Como executar localmente com Docker
+## 🧱 Estrutura do Projeto
 
-### Pré-requisitos
-- Docker e Docker Compose instalados
-
-### 1. Clone o repositório
-```bash
-git clone https://github.com/leandro-nnogueira/coleira-tech-api.git
-cd coleira-tech-api
+```
+coleira-tech-api
+├── src
+│   ├── main
+│   │   ├── java/com/coleiratech
+│   │   │   ├── controller     # Endpoints REST
+│   │   │   ├── model          # Entidades JPA
+│   │   │   ├── repository     # Interfaces de persistência
+│   │   │   └── service        # Regras de negócio
+│   │   └── resources
+│   │       └── application.properties
+├── Dockerfile
+├── docker-compose.yml
+├── README.md
+└── pom.xml
 ```
 
-### 2. Suba os containers
+---
+
+## ▶️ Como Executar
+
+### Pré-requisitos
+
+- Docker e Docker Compose instalados
+- Java 21 (caso prefira rodar localmente sem container)
+
+### Executar com Docker
+
 ```bash
 docker-compose up --build
 ```
 
-A aplicação estará disponível em `http://localhost:8080`.
+### Executar Localmente (sem Docker)
 
----
+1. Configure o banco PostgreSQL com as credenciais do `application.properties`.
+2. Compile e execute:
 
-## 📬 Endpoints principais
-
-### POST `/localizacao`
-Registra a localização de um animal.
-
-**Body (JSON):**
-```json
-{
-  "latitude": -23.561234,
-  "longitude": -46.654321,
-  "identificadorAnimal": "123e4567-e89b-12d3-a456-426614174000"
-}
+```bash
+./mvnw spring-boot:run
 ```
 
-### GET `/localizacao/ultima/{identificadorAnimal}`
-Retorna a última localização do animal.
-
-### GET `/localizacao/historico/{identificadorAnimal}`
-Retorna todo o histórico de localizações do animal.
-
 ---
 
-## 🐾 Sobre o projeto
+## 📬 Endpoints da API
 
-Esse projeto foi desenvolvido por estudantes como parte de um **projeto integrador** com foco em soluções tecnológicas aplicadas à proteção animal. O sistema está em constante desenvolvimento e aberto a sugestões e melhorias.
+Todos os endpoints estão sob o caminho base: `/api`
+
+| Método | Endpoint                         | Descrição                                 |
+|--------|----------------------------------|-------------------------------------------|
+| POST   | `/api/localizacoes`             | Envia uma nova localização do pet         |
+| GET    | `/api/localizacoes/ultimas/{id}`| Última localização do pet por ID          |
+| GET    | `/api/localizacoes/historico/{id}`| Histórico completo de localizações        |
 
 ---
 
 ## 📄 Licença
 
 Este projeto está licenciado sob a **MIT License** – veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+---
+
+## 👨‍💻 Desenvolvedores
+
+Este projeto foi idealizado e desenvolvido por estudantes de Engenharia da Computação como parte do projeto integrador da graduação.
+
+Contribuições são muito bem-vindas! 💙
