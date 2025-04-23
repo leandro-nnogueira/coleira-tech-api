@@ -5,9 +5,9 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://ballast.proxy.rlwy.net:39410/railway
+      SPRING_DATASOURCE_URL: jdbc:postgresql://ballast.proxy.rlwy.net:26163/railway
       SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: OcgOZwJoTqPkXAHtaZcKioBnuIYvKFxg
+      SPRING_DATASOURCE_PASSWORD: ASAmvVZtqLtYtTBpMsaPjOwGahTfdkev
     networks:
       - coleira-network
 
