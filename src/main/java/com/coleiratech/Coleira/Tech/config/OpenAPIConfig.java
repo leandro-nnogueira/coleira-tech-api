@@ -12,8 +12,8 @@ public class OpenAPIConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Blogging Platform API")
-                        .description("API para gerenciar posts de blog")
+                        .title("Coleira Tech")
+                        .description("API para gerenciar Pets com a Coleira Tech")
                         .version("1.0"));
     }
 }
