@@ -1,7 +1,12 @@
 package com.coleiratech.Coleira.Tech.service;
 
+import com.coleiratech.Coleira.Tech.dtos.LocalizacaoIotDTO;
+import com.coleiratech.Coleira.Tech.model.Coleira;
 import com.coleiratech.Coleira.Tech.model.Localizacao;
+import com.coleiratech.Coleira.Tech.model.Pet;
+import com.coleiratech.Coleira.Tech.repository.ColeiraRepository;
 import com.coleiratech.Coleira.Tech.repository.LocalizacaoRepository;
+import com.coleiratech.Coleira.Tech.repository.PetRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,8 +23,40 @@ public class LocalizacaoService {
 
     private final LocalizacaoRepository repository;
 
+    private final PetRepository petRepository;
+
+    private final ColeiraRepository coleiraRepository;
+
     public Localizacao salvar(Localizacao localizacao) {
         localizacao.setDataHoraRecebimento(LocalDateTime.now());
+        return repository.save(localizacao);
+    }
+
+    public Localizacao salvarIot(LocalizacaoIotDTO dto) {
+
+        Pet pet = petRepository.findById(dto.getPetId())
+                .orElseThrow();
+
+        Coleira coleira = coleiraRepository
+                .findById(dto.getColeiraId())
+                .orElseThrow();
+
+        Localizacao localizacao = new Localizacao();
+
+        localizacao.setLatitude(dto.getLatitude());
+
+        localizacao.setLongitude(dto.getLongitude());
+
+        localizacao.setDataHoraGPS(dto.getDataHoraGPS());
+
+        localizacao.setPet(pet);
+
+        localizacao.setColeira(coleira);
+
+        localizacao.setDataHoraRecebimento(
+                LocalDateTime.now()
+        );
+
         return repository.save(localizacao);
     }
 

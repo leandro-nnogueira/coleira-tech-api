@@ -1,10 +1,13 @@
 package com.coleiratech.Coleira.Tech.controller;
 
+import com.coleiratech.Coleira.Tech.dtos.LocalizacaoIotDTO;
 import com.coleiratech.Coleira.Tech.model.Localizacao;
 import com.coleiratech.Coleira.Tech.service.LocalizacaoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.util.List;
 import java.util.UUID;
@@ -20,6 +23,34 @@ public class LocalizacaoController {
     public ResponseEntity<Localizacao> criar(@RequestBody Localizacao localizacao) {
         Localizacao novaLocalizacao = service.salvar(localizacao);
         return ResponseEntity.ok(novaLocalizacao);
+    }
+
+    @PostMapping("/iot")
+    public ResponseEntity<Localizacao> criarIot(
+            @RequestBody String body
+    ) {
+
+        try {
+
+            String jsonLimpo = body.replace("\\", "");
+
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+
+            LocalizacaoIotDTO dto =
+                    mapper.readValue(jsonLimpo, LocalizacaoIotDTO.class);
+
+            Localizacao localizacao =
+                    service.salvarIot(dto);
+
+            return ResponseEntity.ok(localizacao);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping
